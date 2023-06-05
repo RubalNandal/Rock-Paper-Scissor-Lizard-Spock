@@ -3,32 +3,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+/// <summary>
+/// Manages events and event listeners for various game events.
+/// </summary>
 public class EventManager : MonoBehaviour
 {
     public static EventManager Instance;
 
-    
-    private void Awake() {
-        
-        if(Instance == null){
+    private void Awake()
+    {
+        if (Instance == null)
+        {
             Instance = this;
         }
-        else{
+        else
+        {
             Destroy(this);
         }
     }
 
-
-    //called when game state is changed
+    /// <summary>
+    /// Event triggered when the game state is changed.
+    /// </summary>
     public UnityEvent<GameState> gameStateChange;
-    
-    // called when player plays there hand
+
+    /// <summary>
+    /// Event triggered when the player plays their hand.
+    /// </summary>
     public UnityEvent<BaseAttack> playerHandPlayed;
 
-    // called when enemy plays there hand
+    /// <summary>
+    /// Event triggered when the enemy plays their hand.
+    /// </summary>
     public UnityEvent<BaseAttack> enemyHandPlayed;
 
-    // called when round ends
-
+    /// <summary>
+    /// Event triggered when the round ends.
+    /// </summary>
     public UnityEvent roundEnded;
 }

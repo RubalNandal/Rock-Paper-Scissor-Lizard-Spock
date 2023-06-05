@@ -2,6 +2,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Represents a playable hand in the game.
+/// </summary>
 public class PlayHand : MonoBehaviour
 {
     [SerializeField]
@@ -16,7 +19,9 @@ public class PlayHand : MonoBehaviour
 
     
 
-    // called by UI buttons when player plas hand
+    /// <summary>
+    /// Invoked when the player plays the hand.
+    /// </summary>
     public void OnHandPlayed(){
         
         EventManager.Instance.playerHandPlayed.Invoke(_handAttack);

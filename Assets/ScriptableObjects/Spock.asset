@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Spock
   m_EditorClassIdentifier: 
   id: 1
-  attackImage: {fileID: -1695702290, guid: 3581fface2eb042358be811bf771eda3, type: 3}
-  attackType: 3
-  weakAgainst: 01000000
-  strongAgainst: 02000000
+  attackImage: {fileID: 988248178, guid: 3581fface2eb042358be811bf771eda3, type: 3}
+  attackType: 5
+  weakAgainst: 0200000004000000
+  strongAgainst: 0300000001000000

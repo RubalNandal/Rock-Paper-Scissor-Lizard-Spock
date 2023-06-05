@@ -2,6 +2,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Countdown timer for the player's turn.
+/// </summary>
 public class CountDownTimer : MonoBehaviour
 {
     
@@ -32,6 +35,10 @@ public class CountDownTimer : MonoBehaviour
         EventManager.Instance.gameStateChange.RemoveListener(StartTimer);
     }
 
+    /// <summary>
+    /// Starts the countdown timer when the game state changes to the player's turn.
+    /// </summary>
+    /// <param name="newGameState">The new game state.</param>
     void StartTimer(GameState newGameState){
 
         if(newGameState == GameState.PlayerTurn){

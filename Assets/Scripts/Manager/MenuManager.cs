@@ -2,15 +2,18 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Manages the menu UI and updates UI elements based on game events.
+/// </summary>
 public class MenuManager : MonoBehaviour
 {
     public static MenuManager Instance;
 
     [SerializeField]
-    private Transform _mainMenu , _gamePannel;
+    private Transform _mainMenu, _gamePanel;
 
     [SerializeField]
-    private Transform _enemyHandDisaplyHolder;
+    private Transform _enemyHandDisplayHolder;
     [SerializeField]
     private TMP_Text _enemyHandTextHolder;
     [SerializeField]
@@ -18,14 +21,16 @@ public class MenuManager : MonoBehaviour
     [SerializeField]
     private TMP_Text _currentScoreCountHolder;
 
-    int _score;
+    private int _score;
 
-    private void Awake() {
-        
-        if(Instance == null){
+    private void Awake()
+    {
+        if (Instance == null)
+        {
             Instance = this;
         }
-        else{
+        else
+        {
             Destroy(this);
         }
 
@@ -33,59 +38,67 @@ public class MenuManager : MonoBehaviour
         EventManager.Instance.enemyHandPlayed.AddListener(UpdateEnemyUI);
     }
 
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         EventManager.Instance.gameStateChange.RemoveListener(OnGameStateChange);
         EventManager.Instance.enemyHandPlayed.RemoveListener(UpdateEnemyUI);
     }
-    public void ShowMainMenu(){
+
+    /// <summary>
+    /// Shows the main menu UI and hides the game panel.
+    /// </summary>
+    public void ShowMainMenu()
+    {
         _mainMenu.gameObject.SetActive(true);
-        _gamePannel.gameObject.SetActive(false);
+        _gamePanel.gameObject.SetActive(false);
     }
 
-    private void OnGameStateChange(GameState newGameState){
-        if(newGameState == GameState.MainMenu){
+    private void OnGameStateChange(GameState newGameState)
+    {
+        if (newGameState == GameState.MainMenu)
+        {
             ShowMainMenu();
             UpdateHighScoreUI();
             UpdatePlayerUI();
         }
-        else if(newGameState == GameState.Victory)
+        else if (newGameState == GameState.Victory)
         {
             _score++;
             UpdatePlayerUI();
         }
-        else if(newGameState == GameState.Defeat)
+        else if (newGameState == GameState.Defeat)
         {
             _score = 0;
         }
-        
-        
     }
 
-    // updates the UI for what hand computer played
-    private void UpdateEnemyUI(BaseAttack handPlayed){
-
+    /// <summary>
+    /// Updates the UI to display the hand played by the computer.
+    /// </summary>
+    /// <param name="handPlayed">The hand played by the computer.</param>
+    private void UpdateEnemyUI(BaseAttack handPlayed)
+    {
         _enemyHandTextHolder.text = "Computer played " + handPlayed.attackType.ToString();
 
-        if(_enemyHandDisaplyHolder.TryGetComponent(out Image enemyHandImage)){
+        if (_enemyHandDisplayHolder.TryGetComponent(out Image enemyHandImage))
+        {
             enemyHandImage.sprite = handPlayed.attackImage;
         }
-
     }
 
-    private void UpdatePlayerUI(){
-
+    /// <summary>
+    /// Updates the UI to display the player's current score.
+    /// </summary>
+    private void UpdatePlayerUI()
+    {
         _currentScoreCountHolder.text = _score.ToString();
-
     }
 
+    /// <summary>
+    /// Updates the UI to display the high score.
+    /// </summary>
     private void UpdateHighScoreUI()
     {
         _highScoreCountHolder.text = PlayerPrefs.GetInt(EnvConstants.HIGH_SCORE_KEY).ToString();
     }
-
-    //private void UpdateHighScoreUI()
-    //{
-    //    _highScoreCountHolder.text = PlayerPrefs.GetInt(EnvConstants.HIGH_SCORE_KEY).ToString();
-    //}
-
 }
