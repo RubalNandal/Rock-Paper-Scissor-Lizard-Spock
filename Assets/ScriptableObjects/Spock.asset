@@ -15,5 +15,13 @@ MonoBehaviour:
   id: 1
   attackImage: {fileID: 988248178, guid: 3581fface2eb042358be811bf771eda3, type: 3}
   attackType: 5
-  weakAgainst: 0200000004000000
-  strongAgainst: 0300000001000000
+  strongAgainst:
+  - attackType: 1
+    description: vaporizes
+  - attackType: 3
+    description: smashes
+  weakAgainst:
+  - attackType: 2
+    description: disproves
+  - attackType: 4
+    description: poisons

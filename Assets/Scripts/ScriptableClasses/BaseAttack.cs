@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,25 +21,24 @@ public class BaseAttack : ScriptableObject
     /// <summary>
     /// The type of the attack.
     /// </summary>
-
    public AttackType attackType;
-
-    /// <summary>
-    /// The list of attack types that this attack is weak against.
-    /// </summary>
-
-   public List<AttackType> weakAgainst;
 
     /// <summary>
     /// The list of attack types that this attack is strong against.
     /// </summary>
-   
-   public List<AttackType> strongAgainst;
+    public List<AttackAgainst> strongAgainst;
+
+    /// <summary>
+    /// The list of attack types that this attack is weak against.
+    /// </summary>
+    public List<AttackAgainst> weakAgainst;
+
+    //public List<AttackAgainst> strongAgainst;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="BaseAttack"/> class.
     /// </summary>
-   public BaseAttack(){
+    public BaseAttack(){
        attackType = AttackType.Empty;
    }
 }
@@ -55,4 +55,11 @@ public enum AttackType{
     Lizard,
     Spock
 
+}
+
+[Serializable]
+public struct AttackAgainst
+{
+    public AttackType attackType;
+    public string description;
 }

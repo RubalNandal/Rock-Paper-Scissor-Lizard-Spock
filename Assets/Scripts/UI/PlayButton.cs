@@ -4,6 +4,6 @@ public class PlayButton : MonoBehaviour
 {
     
     public void OnPlayClick(){
-        GameManager.Instance.ChangeGameState(GameState.EnemyTurn);
+        TurnManager.Instance.NextTurn();
     }
 }

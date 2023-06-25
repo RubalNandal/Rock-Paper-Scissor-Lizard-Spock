@@ -46,6 +46,11 @@ public class CountDownTimer : MonoBehaviour
             _timerIsRunning  = true;
             _timeRemaining = countDownTime;
         }
+        else if( newGameState == GameState.Calculation)
+        {
+            _timerIsRunning = false;
+            _timeRemaining = countDownTime;
+        }
         
     }
 
@@ -67,7 +72,9 @@ public class CountDownTimer : MonoBehaviour
                 _timerSlider.value = 0;
                 _timeRemaining = 0;
                 _timerIsRunning = false;
-                GameManager.Instance.ChangeGameState(GameState.Calculation);
+
+                TurnManager.Instance.NextTurn();
+                //GameManager.Instance.ChangeGameState(GameState.Calculation);
             }
         }
     }

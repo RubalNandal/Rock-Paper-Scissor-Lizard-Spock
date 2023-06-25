@@ -6,23 +6,23 @@ using UnityEngine.Events;
 /// <summary>
 /// Manages the game state and score, and handles state transitions.
 /// </summary>
+[RequireComponent(typeof(IHighScore))]
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
     private GameState _gameState;
     private int _score;
+    private IHighScore _highScoreUpdater;
 
     private void Awake()
     {
         if (Instance == null)
-        {
             Instance = this;
-        }
         else
-        {
             Destroy(this);
-        }
+
+        _highScoreUpdater = GetComponent<IHighScore>();
     }
 
     private void Start()
@@ -43,36 +43,38 @@ public class GameManager : MonoBehaviour
         {
             case GameState.MainMenu:
                 {
-                    CheckHighScore();
+                    _highScoreUpdater.UpdateHighScore(_score);
                     break;
                 }
             case GameState.PlayerTurn:
                 {
-                    Debug.Log("Player Turn");
+                    Debug.Log("Game Manager -> Player Turn");
                     // Unpause the game mechanics when player's turn starts
                     Time.timeScale = 1;
                     break;
                 }
             case GameState.EnemyTurn:
                 {
-                    Debug.Log("Enemy Turn");
+                    Debug.Log("Game Manager -> Enemy Turn");
                     break;
                 }
             case GameState.Calculation:
                 {
-                    Debug.Log("Computing battle results");
+                    Debug.Log("Game Manager -> Computing battle results");
                     break;
                 }
             case GameState.Victory:
                 {
-                    Debug.Log("Round Won");
+                    Debug.Log("Game Manager -> Round Won");
                     _score++;
                     break;
                 }
             case GameState.Defeat:
                 {
-                    CheckHighScore();
-                    Debug.Log("Round Lost");
+                    _highScoreUpdater.UpdateHighScore(_score);
+                    // Reset current score after high score update
+                    _score = 0;
+                    Debug.Log("Game Manager -> Round Lost");
                     break;
                 }
         }
@@ -80,26 +82,6 @@ public class GameManager : MonoBehaviour
         EventManager.Instance.gameStateChange.Invoke(newGameState);
     }
 
-    /// <summary>
-    /// Checks and updates the high score if necessary.
-    /// </summary>
-    public void CheckHighScore()
-    {
-        if (PlayerPrefs.HasKey(EnvConstants.HIGH_SCORE_KEY))
-        {
-            if (_score > PlayerPrefs.GetInt(EnvConstants.HIGH_SCORE_KEY))
-            {
-                PlayerPrefs.SetInt(EnvConstants.HIGH_SCORE_KEY, _score);
-            }
-        }
-        else
-        {
-            PlayerPrefs.SetInt(EnvConstants.HIGH_SCORE_KEY, _score);
-        }
-
-        // Reset current score after high score update
-        _score = 0;
-    }
 }
 
 /// <summary>
@@ -112,5 +94,6 @@ public enum GameState
     PlayerTurn,
     Calculation,
     Victory,
-    Defeat
+    Defeat,
+    Tie
 }

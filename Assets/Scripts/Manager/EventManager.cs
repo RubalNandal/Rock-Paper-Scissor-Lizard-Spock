@@ -41,4 +41,9 @@ public class EventManager : MonoBehaviour
     /// Event triggered when the round ends.
     /// </summary>
     public UnityEvent roundEnded;
+
+    /// <summary>
+    /// Event triggers click feedback
+    /// </summary>
+    public UnityEvent clickFeedback;
 }

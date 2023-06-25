@@ -1,0 +1,53 @@
+{
+  "metadata": [
+    {
+      "src": [
+        {
+          "src": "..",
+          "files": ["Assets/Scripts/**/*.cs"],
+          "exclude": ["**/Editor/**"]
+        }
+      ],
+      "dest": "docs",
+      "globalNamespaceId": "Global",
+      "filter": "ApiFilter.config",
+      "plugins": [
+        "filter",
+        "searchIndex",
+        "memberLevelDotNetApi"
+      ],
+      "template": ["default"],
+      "overwrite": true
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "src": "obj/temp/api",
+        "files": [ "**/*.yml" ],
+        "dest": "api"
+      },
+      {
+        "files": ["Assets/**/*.md"],
+        "exclude": ["**/Editor/**"],
+        "src": "./"
+      }
+    ],
+    "resource": [
+      {
+        "files": ["Assets/Scripts/**/*.csproj"],
+        "exclude": ["**/Editor/**"],
+        "src": "./"
+      }
+    ],
+    "dest": "_site",
+    "globalMetadata": {
+      "_appTitle": "Unity Project Documentation",
+      "_disableContribution": true
+    },
+    "markdownEngineName": "markdig",
+    "markdownEngineProperties": {
+      "enableEmoji": true
+    }
+  }
+}
